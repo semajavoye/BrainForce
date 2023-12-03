@@ -4,6 +4,8 @@ import time
 from colorama import Fore, Style
 import itertools
 
+user_confirmation = False
+
 usages = {
     '0': 'Exit',
     '1': 'DDoS Attack',
@@ -68,7 +70,28 @@ usages = {
 def get_usage():
     global user_input
     global usage
-    user_input = input("Enter a number (0-56) to start doing Shit: ")
+    global user_confirmation
+
+    if user_confirmation == False:
+        user_confirmation_input = input("I have read the disclaimer and agree to use this program on my own network. (y/n): ")
+        if user_confirmation_input == "y":
+            user_confirmation = True
+            user_input = input("Enter a number (0-56) to start a attack: ")
+            usage = usages.get(user_input, "Invalid input")
+            if usage == "Invalid input":
+                print(Fore.RED + "Invalid input")
+                get_usage()
+        elif user_confirmation_input == "n":
+            user_confirmation = False
+            print("Exiting...")
+            time.sleep(2)
+            exit()
+        else:
+            user_confirmation = False
+            print(Fore.RED + "Invalid input")
+            get_usage()
+
+    user_input = input("Enter a number (0-56) to start a attack: ")
     usage = usages.get(user_input, "Invalid input")
 
 
@@ -111,7 +134,9 @@ ________________________________________________________________________________
 [10] - Cryptojacking         [24] - Whaling                [38] - Scareware             [52] - Worm
 [11] - Botnet                [25] - Vishing                [39] - Antivirus Evasion     [53] - Virus
 [12] - Trojan                [26] - Smishing               [40] - Exploit Kit           [54] - Fileless Malware
-[13] - Virus                 [27] - Pharming               [41] - Zero-Day Exploit      [55] - Keylogger                                                                                                        
+[13] - Virus                 [27] - Pharming               [41] - Zero-Day Exploit      [55] - Keylogger        
+
+**DISCLAIMER**: We are not responsible for any damage caused by the program. Use it solely on your own network and at your own risk!
 '''
 
 
